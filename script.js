@@ -21,3 +21,24 @@ document.querySelectorAll('[data-slider]').forEach(slider=>{
   viewport.addEventListener('pointercancel',()=>{dragging=false;});
   go(0);
 });
+
+// Always open the website from the top, even when the browser restores an old scroll position.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.addEventListener('pageshow', () => {
+  if (!location.hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+});
+
+// 10-minute offer countdown. It restarts after reaching zero.
+const offerTimer = document.getElementById('offerTimer');
+if (offerTimer) {
+  const duration = 10 * 60;
+  let remaining = duration;
+  const renderTimer = () => {
+    const minutes = String(Math.floor(remaining / 60)).padStart(2, '0');
+    const seconds = String(remaining % 60).padStart(2, '0');
+    offerTimer.textContent = `${minutes}:${seconds}`;
+    remaining = remaining <= 0 ? duration : remaining - 1;
+  };
+  renderTimer();
+  window.setInterval(renderTimer, 1000);
+}
