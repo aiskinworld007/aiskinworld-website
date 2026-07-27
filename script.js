@@ -1,29 +1,23 @@
-const menuButton = document.getElementById('menuButton');
-const mobileMenu = document.getElementById('mobileMenu');
-menuButton.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.remove('open')));
+const menuButton=document.getElementById('menuButton');
+const mobileMenu=document.getElementById('mobileMenu');
+menuButton?.addEventListener('click',()=>{const open=mobileMenu.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));});
+mobileMenu?.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{mobileMenu.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}));
 
-const track = document.querySelector('.reel-track');
-const slides = [...document.querySelectorAll('.reel-slide')];
-const dots = [...document.querySelectorAll('.reel-dots button')];
-const prev = document.querySelector('.reel-prev');
-const next = document.querySelector('.reel-next');
-let reelIndex = 0;
-let touchStartX = 0;
-
-function showReel(index) {
-  reelIndex = (index + slides.length) % slides.length;
-  track.style.transform = `translateX(-${reelIndex * 100}%)`;
-  dots.forEach((dot, i) => dot.classList.toggle('active', i === reelIndex));
-  slides.forEach((slide, i) => slide.classList.toggle('active', i === reelIndex));
-}
-
-prev?.addEventListener('click', () => showReel(reelIndex - 1));
-next?.addEventListener('click', () => showReel(reelIndex + 1));
-dots.forEach((dot, i) => dot.addEventListener('click', () => showReel(i)));
-track?.addEventListener('touchstart', event => { touchStartX = event.touches[0].clientX; }, { passive: true });
-track?.addEventListener('touchend', event => {
-  const change = event.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(change) > 45) showReel(reelIndex + (change < 0 ? 1 : -1));
-}, { passive: true });
-showReel(0);
+document.querySelectorAll('[data-slider]').forEach(slider=>{
+  const viewport=slider.querySelector('.slider-viewport');
+  const track=slider.querySelector('.slider-track');
+  const slides=[...slider.querySelectorAll('.slide')];
+  const prev=slider.querySelector('.prev');
+  const next=slider.querySelector('.next');
+  const dots=slider.querySelector('.slider-dots');
+  let index=0,startX=0,deltaX=0,dragging=false;
+  slides.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Go to slide ${i+1}`);dot.addEventListener('click',()=>go(i));dots.appendChild(dot);});
+  const dotButtons=[...dots.children];
+  function go(newIndex){index=(newIndex+slides.length)%slides.length;track.style.transform=`translateX(-${index*100}%)`;dotButtons.forEach((dot,i)=>dot.classList.toggle('active',i===index));}
+  prev?.addEventListener('click',()=>go(index-1));next?.addEventListener('click',()=>go(index+1));
+  viewport.addEventListener('pointerdown',e=>{dragging=true;startX=e.clientX;deltaX=0;viewport.setPointerCapture(e.pointerId);});
+  viewport.addEventListener('pointermove',e=>{if(!dragging)return;deltaX=e.clientX-startX;});
+  viewport.addEventListener('pointerup',()=>{if(!dragging)return;dragging=false;if(Math.abs(deltaX)>55)go(index+(deltaX<0?1:-1));});
+  viewport.addEventListener('pointercancel',()=>{dragging=false;});
+  go(0);
+});
