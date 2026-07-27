@@ -30,3 +30,25 @@
 .purchase-buttons .primary-button{margin:0;display:flex;align-items:center;justify-content:center}.purchase-buttons .market-button{min-width:0}
 @media(max-width:700px){.offer-header{display:block;text-align:center}.offer-header small{display:block;margin-top:4px}.purchase-buttons{grid-template-columns:1fr 1fr}.purchase-buttons .primary-button{grid-column:1/-1}.countdown{font-size:38px}}
 @media(max-width:390px){.purchase-buttons{grid-template-columns:1fr}.purchase-buttons .primary-button{grid-column:auto}}
+
+
+/* Amazon + Flipkart logo cards */
+.purchase-buttons{grid-template-columns:1fr 1fr;gap:12px}
+.purchase-buttons .primary-button{grid-column:1/-1;min-height:64px}
+.market-card-link{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:15px 12px 12px;border:1px solid #e5dce9;border-radius:18px;background:#fff;box-shadow:0 8px 20px rgba(58,18,74,.09);transition:transform .2s ease,box-shadow .2s ease}
+.market-card-link:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(58,18,74,.14)}
+.market-card-link>strong{font-size:25px;line-height:1;color:#171717}
+.market-logo{height:34px;display:flex;align-items:center;justify-content:center;font-weight:800;line-height:1}
+.amazon-logo{position:relative;color:#111;font-family:Arial,sans-serif;font-size:28px;letter-spacing:-1.5px;padding-bottom:7px}
+.amazon-logo i{position:absolute;left:14px;right:4px;bottom:0;height:8px;border-bottom:3px solid #ff9900;border-radius:0 0 50% 50%;transform:rotate(2deg)}
+.amazon-logo i:after{content:"";position:absolute;right:-1px;bottom:-4px;width:0;height:0;border-left:6px solid #ff9900;border-top:3px solid transparent;border-bottom:3px solid transparent;transform:rotate(18deg)}
+.flipkart-logo{gap:7px;font-family:Arial,sans-serif}
+.flipkart-logo>span{color:#2874f0;font-size:25px;font-style:italic;letter-spacing:-1px}
+.flipkart-logo>i{position:relative;width:29px;height:31px;display:grid;place-items:center;border-radius:4px;background:#ffd814;color:#2874f0;font:italic 900 20px Arial,sans-serif;box-shadow:inset 0 -2px 0 rgba(0,0,0,.08)}
+.flipkart-logo>i:before{content:"";position:absolute;top:-5px;left:7px;width:15px;height:8px;border:2px solid #ffd814;border-bottom:0;border-radius:8px 8px 0 0}
+.market-cta{width:100%;min-height:42px;display:flex;align-items:center;justify-content:center;border-radius:12px;font-size:14px;font-weight:900}
+.amazon-cta{background:#ffbf2f;color:#171717}
+.flipkart-cta{background:#2874f0;color:#fff}
+.amazon-card-link{border-bottom:5px solid #ff9900}
+.flipkart-card-link{border-bottom:5px solid #2874f0}
+@media(max-width:390px){.purchase-buttons{grid-template-columns:1fr 1fr}.purchase-buttons .primary-button{grid-column:1/-1}.market-card-link{padding:12px 8px 9px}.amazon-logo{font-size:23px}.flipkart-logo>span{font-size:21px}.market-card-link>strong{font-size:22px}.market-cta{font-size:12px}}
